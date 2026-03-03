@@ -1,122 +1,190 @@
-import React, { useState } from 'react';
+import React from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  Drawer,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  CssBaseline,
+  Card,
+  CardContent,
+  Grid,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Chip,
+  Divider,
+} from "@mui/material";
 
-interface Plan {
-    id: string;
-    name: string;
-    premium: number;
-    coverage: number;
-    status: 'active' | 'inactive';
-}
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import PaymentIcon from "@mui/icons-material/Payment";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
+import HealthNavbar from "./Navbar";
 
-interface ClaimData {
-    id: string;
-    amount: number;
-    status: 'pending' | 'approved' | 'rejected';
-    date: string;
-}
+const drawerWidth = 240;
 
-export default function Dashboard() {
-    const [plans] = useState<Plan[]>([
-        { id: '1', name: 'Basic Plan', premium: 150, coverage: 80000, status: 'active' },
-        { id: '2', name: 'Premium Plan', premium: 300, coverage: 150000, status: 'active' },
-    ]);
+const HealthDashboard: React.FC = () => {
+  return (
 
-    const [claims] = useState<ClaimData[]>([
-        { id: 'C001', amount: 5000, status: 'approved', date: '2024-01-15' },
-        { id: 'C002', amount: 3000, status: 'pending', date: '2024-01-20' },
-    ]);
+    <Box sx={{ display: "flex" }}>
+      
+      <CssBaseline />
+      <HealthNavbar />
+      
 
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-            <div className="max-w-6xl mx-auto">
-                <h1 className="text-4xl font-bold text-gray-800 mb-8">Health Insurance Dashboard</h1>
+      {/* Sidebar */}
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            mt: 8, // Adjust for AppBar height
+          },
+        }}
+      >
+        <Box sx={{ overflow: "auto" }}>
+          <List>
+            <ListItemButton>
+              <ListItemIcon><DashboardIcon /></ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
 
-                {/* Stats Overview */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <h3 className="text-gray-600 text-sm font-semibold">Active Plans</h3>
-                        <p className="text-3xl font-bold text-indigo-600">{plans.length}</p>
-                    </div>
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <h3 className="text-gray-600 text-sm font-semibold">Total Premium</h3>
-                        <p className="text-3xl font-bold text-green-600">${plans.reduce((sum, p) => sum + p.premium, 0)}</p>
-                    </div>
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <h3 className="text-gray-600 text-sm font-semibold">Pending Claims</h3>
-                        <p className="text-3xl font-bold text-orange-600">{claims.filter(c => c.status === 'pending').length}</p>
-                    </div>
-                </div>
+            <ListItemButton>
+              <ListItemIcon><LocalHospitalIcon /></ListItemIcon>
+              <ListItemText primary="My Policy" />
+            </ListItemButton>
 
-                {/* Plans Section */}
-                <div className="bg-white rounded-lg shadow mb-8">
-                    <div className="p-6 border-b border-gray-200">
-                        <h2 className="text-2xl font-bold text-gray-800">Your Plans</h2>
-                    </div>
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead className="bg-gray-50">
-                                <tr>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Plan Name</th>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Premium</th>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Coverage</th>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {plans.map(plan => (
-                                    <tr key={plan.id} className="border-t border-gray-200 hover:bg-gray-50">
-                                        <td className="px-6 py-4 text-sm text-gray-800">{plan.name}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-800">${plan.premium}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-800">${plan.coverage.toLocaleString()}</td>
-                                        <td className="px-6 py-4">
-                                            <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
-                                                {plan.status}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <ListItemButton>
+              <ListItemIcon><AssignmentIcon /></ListItemIcon>
+              <ListItemText primary="Claims" />
+            </ListItemButton>
 
-                {/* Claims Section */}
-                <div className="bg-white rounded-lg shadow">
-                    <div className="p-6 border-b border-gray-200">
-                        <h2 className="text-2xl font-bold text-gray-800">Recent Claims</h2>
-                    </div>
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead className="bg-gray-50">
-                                <tr>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Claim ID</th>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Amount</th>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Date</th>
-                                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {claims.map(claim => (
-                                    <tr key={claim.id} className="border-t border-gray-200 hover:bg-gray-50">
-                                        <td className="px-6 py-4 text-sm text-gray-800">{claim.id}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-800">${claim.amount}</td>
-                                        <td className="px-6 py-4 text-sm text-gray-800">{claim.date}</td>
-                                        <td className="px-6 py-4">
-                                            <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                                                claim.status === 'approved' ? 'bg-green-100 text-green-800' :
-                                                claim.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                                                'bg-red-100 text-red-800'
-                                            }`}>
-                                                {claim.status}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
+            <ListItemButton>
+              <ListItemIcon><PaymentIcon /></ListItemIcon>
+              <ListItemText primary="Payments" />
+            </ListItemButton>
+
+            <ListItemButton>
+              <ListItemIcon><SupportAgentIcon /></ListItemIcon>
+              <ListItemText primary="Support" />
+            </ListItemButton>
+          </List>
+        </Box>
+      </Drawer>
+
+      {/* Main Content */}
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          bgcolor: "#f4f6f8",
+          p: 3,
+          width: `calc(100% - ${drawerWidth}px)`,
+        }}
+      >
+        <Toolbar />
+
+        {/* Summary Cards */}
+        <Grid container spacing={3}>
+          {[
+            { title: "Active Policy", value: "Family Premium Plan" },
+            { title: "Total Coverage", value: "$500,000" },
+            { title: "Claims This Year", value: "3" },
+            { title: "Premium Due", value: "$250 (Due 15th Feb)" },
+          ].map((card) => (
+            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={card.title}>
+              <Card>
+                <CardContent>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    {card.title}
+                  </Typography>
+                  <Typography variant="h6" fontWeight="bold">
+                    {card.value}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+
+        {/* Recent Claims Table */}
+        <Box mt={5}>
+          <Typography variant="h6" gutterBottom>
+            Recent Claims
+          </Typography>
+          <Card>
+            <CardContent>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Claim ID</TableCell>
+                    <TableCell>Hospital</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Amount</TableCell>
+                    <TableCell>Status</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {[
+                    {
+                      id: "CLM-1023",
+                      hospital: "City Care Hospital",
+                      date: "10 Feb 2026",
+                      amount: "$1,200",
+                      status: "Approved",
+                    },
+                    {
+                      id: "CLM-1020",
+                      hospital: "Green Valley Clinic",
+                      date: "02 Jan 2026",
+                      amount: "$450",
+                      status: "Pending",
+                    },
+                  ].map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell>{row.id}</TableCell>
+                      <TableCell>{row.hospital}</TableCell>
+                      <TableCell>{row.date}</TableCell>
+                      <TableCell>{row.amount}</TableCell>
+                      <TableCell>
+                        <Chip
+                          label={row.status}
+                          color={
+                            row.status === "Approved"
+                              ? "success"
+                              : "warning"
+                          }
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </Box>
+
+        {/* Action Buttons */}
+        <Box mt={4} display="flex" gap={2}>
+          <Button variant="contained">File New Claim</Button>
+          <Button variant="outlined">Download Policy</Button>
+          <Button variant="outlined">Make Payment</Button>
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+export default HealthDashboard;
