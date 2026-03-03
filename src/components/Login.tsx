@@ -1,5 +1,5 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Box, Button, TextField, Typography, Paper, Avatar } from "@mui/material";
 //import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
@@ -96,6 +96,9 @@ export default function Login() {
                     >
                         Login
                     </Button>
+                    <Link to="/register" style={{ textDecoration: "none", color: "primary.main" }}>
+                        Don't have an account? Register
+                    </Link>
                 </Box>
             </Paper>
         </Box>
