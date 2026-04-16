@@ -7,20 +7,13 @@ import {
   Menu,
   MenuItem,
   Box,
-  IconButton,
-  useTheme,
-  useMediaQuery,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const HealthNavbar: React.FC = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [menuType, setMenuType] = useState<string | null>(null);
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleMenuOpen = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -33,10 +26,6 @@ const HealthNavbar: React.FC = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
     setMenuType(null);
-  };
-
-  const toggleDrawer = () => {
-    setMobileOpen(!mobileOpen);
   };
 
   const menuItems = [

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  AppBar,
   Toolbar,
   Typography,
   Box,
@@ -20,7 +19,6 @@ import {
   TableHead,
   TableRow,
   Chip,
-  Divider,
 } from "@mui/material";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
