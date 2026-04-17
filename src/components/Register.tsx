@@ -47,7 +47,13 @@ const Register = () => {
       body: JSON.stringify(registrationData),
     });
     const data = await response.json();
-    console.log("Registration Data:", data);
+    if (response.ok) {
+      alert("Registration successful!");
+      setRegistrationData(props); // Reset form after successful registration
+    }
+    if (!response.ok) {
+      alert(`Registration failed: ${data.message || "Unknown error"}`);
+    }
     // Here you would typically send the data to your backend API for processing
   }
   return (
