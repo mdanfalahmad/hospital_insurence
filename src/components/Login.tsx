@@ -19,10 +19,12 @@ export default function Login() {
             },
             body: JSON.stringify({ email, password }),
         });
+        console.log("Response status:", response.status);
         const data = await response.json();
-        if (response.status === 200) {
+        console.log("Response data:", data);
+        if (data.status === 200) {
             localStorage.setItem("token", data.token);
-            localStorage.setItem("user", JSON.stringify(data.user.name));
+            localStorage.setItem("user", JSON.stringify(data.full_name));
             navigate("/dashboard");
         } else {
             alert(data.message || "Login failed");
